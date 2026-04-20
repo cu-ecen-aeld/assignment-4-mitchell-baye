@@ -15,6 +15,10 @@ jobs:
           - uses: webfactory/ssh-agent@v0.5.3
             with:
                 ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          - name: Fix known_hosts
+            run: |
+              ssh-keygen -f "/root/.ssh/known_hosts" -R "github.com" || true
+              ssh-keyscan -t rsa,ed25519,ecdsa github.com >> /root/.ssh/known_hosts
           - name: Checkout submodules
             run: git submodule update --init --recursive
           - name: Run full test
