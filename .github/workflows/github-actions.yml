@@ -15,12 +15,6 @@ jobs:
           - uses: webfactory/ssh-agent@v0.5.3
             with:
                 ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          - name: Debug
-            run: |
-                whoami
-                echo $HOME
-                ssh -T git@github.com
-                cat ~/.ssh/known_hosts
           - name: Checkout submodules
             run: git submodule update --init --recursive
           - name: Run full test
